@@ -11,6 +11,10 @@ RUN apt-get update \
 COPY docker/sshd_config /etc/ssh/
 
 COPY docker/ep.sh /opt/docker/provision/entrypoint.d/
+
+RUN mkdir -p /app/public
+COPY stub/index.php /app/public
+
 ENV WEB_DOCUMENT_ROOT=/app/public
 
 #RUN composer1 install -d /app
