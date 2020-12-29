@@ -2,6 +2,7 @@
 FROM webdevops/php-apache:7.3
 #COPY . /app
 
+# Enable ssh
 ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
         && apt-get install -y --no-install-recommends dialog \
@@ -9,6 +10,8 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends openssh-server \
 	&& echo "$SSH_PASSWD" | chpasswd
 COPY docker/sshd_config /etc/ssh/
+COPY docker/ssh.conf /opt/docker/etc/supervisor.d/
+RUN mkdir -p /var/run/sshd
 
 COPY docker/ep.sh /opt/docker/provision/entrypoint.d/
 
